@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>OriFit Store</title>
+    <script src="translations.js"></script>
+    <style>
+        /* يمكنك وضع بعض الأنماط الأساسية هنا */
+        body { font-family: Arial, sans-serif; margin: 20px; text-align: right; direction: rtl;}
+        .product-list { display: flex; flex-wrap: wrap; gap: 20px; }
+        .product-card { border: 1px solid #ccc; padding: 15px; width: 300px; }
+        .product-card img { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+
+    <h1 id="page-title"></h1>
+    <h2 id="product-list-title"></h2>
+    
+    <div id="product-list" class="product-list">
+        </div>
+
+    <script>
+        document.getElementById('page-title').textContent = getTranslation('title');
+        document.getElementById('product-list-title').textContent = getTranslation('product_title');
+
+        // جلب المنتجات من الـ Worker
+        async function fetchProducts() {
+            const productListDiv = document.getElementById('product-list');
+            productListDiv.innerHTML = '... جارٍ تحميل المنتجات'; 
+
+            try {
+                // استخدام الرابط الذي حددناه في translations.js
+                const response = await fetch(`${WORKER_URL}/api/products`);
+                const products = await response.json();
+
+                if (products && products.length > 0) {
+                    productListDiv.innerHTML = ''; // مسح رسالة التحميل
+                    products.forEach(product => {
+                        const card = document.createElement('div');
+                        card.className = 'product-card';
+                        
+                        const imageUrl = `${R2_PUBLIC_URL}/${product.image_key}`; // ربط صورة R2
+                        
+                        card.innerHTML = `
+                            <h3>${product.name_ar}</h3>
+                            <p>${product.description_ar}</p>
+                            <img src="${imageUrl}" alt="${product.name_ar}">
+                            <p><strong>${product.price} ريال</strong></p>
+                            <button onclick="window.location.href='product.html?id=${product.id}'">${getTranslation('buy_button')}</button>
+                        `;
+                        productListDiv.appendChild(card);
+                    });
+                } else {
+                    productListDiv.textContent = 'لا توجد منتجات حالياً.';
+                }
+
+            } catch (error) {
+                productListDiv.textContent = 'حدث خطأ أثناء جلب البيانات: ' + error.message;
+                console.error('Fetch error:', error);
+            }
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html>
