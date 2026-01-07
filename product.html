@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج - OriFit Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .product-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .product-image {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 2.5rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .product-description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .product-options {
+            margin-bottom: 30px;
+        }
+
+        .option-group {
+            margin-bottom: 20px;
+        }
+
+        .option-group label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .option-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .option-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quantity-control label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .quantity-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        .quantity-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.5rem;
+            padding: 50px;
+        }
+
+        .error {
+            background: #f44336;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .product-title {
+                font-size: 1.5rem;
+            }
+
+            .product-price {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-btn">← العودة للمتجر</a>
+            <h1>OriFit Store</h1>
+        </div>
+
+        <div id="success-message" class="success-message"></div>
+        <div id="loading" class="loading">جاري التحميل...</div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="product-container" style="display: none;"></div>
+    </div>
+
+    <script src="translations.js"></script>
+    <script>
+        let currentProduct = null;
+        let quantity = 1;
+        let selectedSize = '';
+        let selectedColor = '';
+
+        // جلب معرف المنتج من الرابط
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        if (!productId) {
+            showError('لم يتم تحديد المنتج');
+        } else {
+            loadProduct(productId);
+        }
+
+        async function loadProduct(id) {
+            try {
+                const response = await fetch(`${WORKER_URL}/api/products`);
+                
+                if (!response.ok) {
+                    throw new Error('فشل في تحميل المنتج');
+                }
+
+                const products = await response.json();
+                currentProduct = products.find(p => p.id == id);
+
+                if (!currentProduct) {
+                    throw new Error('المنتج غير موجود');
+                }
+
+                displayProduct(currentProduct);
+            } catch (error) {
+                console.error('خطأ:', error);
+                showError('حدث خطأ أثناء تحميل المنتج');
+            }
+        }
+
+        function displayProduct(product) {
+            document.getElementById('loading').style.display = 'none';
+            
+            // معالجة الصور
+            const imageUrls = product.image_urls ? product.image_urls.split(',') : [];
+            const mainImage = imageUrls.length > 0 ? `${R2_PUBLIC_URL}/${imageUrls[0]}` : 'placeholder.jpg';
+
+            // معالجة الأحجام والألوان
+            const sizes = product.sizes ? product.sizes.split(',') : ['S', 'M', 'L', 'XL'];
+            const colors = product.colors ? product.colors.split(',') : ['أسود', 'أبيض', 'أزرق'];
+
+            selectedSize = sizes[0];
+            selectedColor = colors[0];
+
+            const container = document.getElementById('product-container');
+            container.innerHTML = `
+                <div class="product-image">
+                    <img src="${mainImage}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/500x500?text=OriFit'">
+                </div>
+                <div class="product-details">
+                    <div>
+                        <h2 class="product-title">${product.name}</h2>
+                        <div class="product-price">${product.price} درهم</div>
+                        <p class="product-description">${product.description || 'منتج عالي الجودة من OriFit'}</p>
+                        
+                        <div class="product-options">
+                            <div class="option-group">
+                                <label>الحجم:</label>
+                                <select id="size-select" onchange="selectedSize = this.value">
+                                    ${sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
+                                </select>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label>اللون:</label>
+                                <select id="color-select" onchange="selectedColor = this.value">
+                                    ${colors.map(color => `<option value="${color}">${color}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="quantity-control">
+                            <label>الكمية:</label>
+                            <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                            <span class="quantity-display" id="quantity-display">1</span>
+                            <button class="quantity-btn" onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="addToCart()">إضافة للسلة</button>
+                        <button class="btn btn-secondary" onclick="buyNow()">اشتر الآن</button>
+                    </div>
+                </div>
+            `;
+            
+            container.style.display = 'grid';
+        }
+
+        function increaseQuantity() {
+            quantity++;
+            document.getElementById('quantity-display').textContent = quantity;
+        }
+
+        function decreaseQuantity() {
+            if (quantity > 1) {
+                quantity--;
+                document.getElementById('quantity-display').textContent = quantity;
+            }
+        }
+
+        function addToCart() {
+            const cartItem = {
+                product_id: currentProduct.id,
+                name: currentProduct.name,
+                price: currentProduct.price,
+                size: selectedSize,
+                color: selectedColor,
+                quantity: quantity,
+                image: currentProduct.image_urls ? currentProduct.image_urls.split(',')[0] : ''
+            };
+
+            // الحصول على السلة الحالية
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            
+            // البحث عن المنتج في السلة
+            const existingIndex = cart.findIndex(item => 
+                item.product_id === cartItem.product_id && 
+                item.size === cartItem.size && 
+                item.color === cartItem.color
+            );
+
+            if (existingIndex >= 0) {
+                cart[existingIndex].quantity += quantity;
+            } else {
+                cart.push(cartItem);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            showSuccess('تمت إضافة المنتج للسلة بنجاح!');
+            
+            // إعادة تعيين الكمية
+            quantity = 1;
+            document.getElementById('quantity-display').textContent = quantity;
+        }
+
+        function buyNow() {
+            addToCart();
+            setTimeout(() => {
+                window.location.href = 'order.html';
+            }, 500);
+        }
+
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
