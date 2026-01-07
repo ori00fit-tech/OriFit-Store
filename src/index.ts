@@ -93,7 +93,7 @@ export default {
             }
         } catch (error) {
             console.error(error);
-            return new Response(JSON.stringify({ error: خطأ داخلي في الخادم: ${error instanceof Error ? error.message : 'غير معروف'} }), { status: 500, headers });
+            return new Response(JSON.stringify({ error: 'خطأ داخلي في الخادم': ${error instanceof Error ? error.message : 'غير معروف'} }), { status: 500, headers });
         }
 
         return new Response(JSON.stringify({ message: "غير مدعوم" }), { status: 405, headers });
