@@ -1,0 +1,20 @@
+name = "orifit-worker"
+main = "src/index.ts" 
+compatibility_date = "2026-01-01" 
+
+[vars]
+# يمكن إضافة مفاتيح API هنا لاحقًا
+# STRIPE_SECRET_KEY = "sk_test_..."
+
+[[r2_buckets]]
+binding = "R2_BUCKET" 
+bucket_name = "orifit-images" # >> يجب تحديث هذا الاسم <<
+preview_bucket = "orifit-images-dev" # (اختياري، للبيئات التطويرية)
+
+[[d1_databases]]
+binding = "DB" 
+database_name = "orifit-store-db"
+database_id = "dcbacf89-5839-476a-8b76-aff356faf80c" # >> يجب تحديث هذا الـ ID <<
+
+[pages]
+project_name = "OriFit-Frontend"
