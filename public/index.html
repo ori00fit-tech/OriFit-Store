@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="متجر OriFit - أفضل منتجات اللياقة البدنية في المغرب بأسعار تنافسية. شحن مجاني فوق 500 درهم.">
+  <meta name="keywords" content="لياقة بدنية, معدات رياضية, مكملات غذائية, المغرب, OriFit">
+  <meta name="author" content="OriFit Store">
+  <meta property="og:title" content="متجر OriFit - منتجات اللياقة البدنية">
+  <meta property="og:description" content="أفضل منتجات اللياقة البدنية في المغرب">
+  <meta property="og:type" content="website">
+  <title>متجر OriFit - منتجات اللياقة البدنية الأصلية</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏋️</text></svg>">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #667eea;
+      --primary-dark: #5568d3;
+      --secondary: #764ba2;
+      --success: #4caf50;
+      --danger: #f44336;
+      --warning: #ff9800;
+      --text: #333;
+      --text-light: #666;
+      --bg: #f5f5f5;
+      --white: #ffffff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+      --radius: 12px;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: var(--white);
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .cart-badge {
+      background: var(--danger);
+      color: var(--white);
+      padding: 2px 8px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: var(--white);
+      padding: 4rem 20px;
+      text-align: center;
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+    }
+    
+    .hero-features {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    
+    .hero-feature {
+      background: rgba(255,255,255,0.15);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
+    }
+    
+    /* Search Bar */
+    .search-section {
+      max-width: 1200px;
+      margin: -30px auto 2rem;
+      padding: 0 20px;
+    }
+    
+    .search-bar {
+      display: flex;
+      gap: 1rem;
+      background: var(--white);
+      padding: 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    
+    .search-bar input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .search-bar select {
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      cursor: pointer;
+      background: var(--white);
+    }
+    
+    .btn-search {
+      padding: 0.8rem 2rem;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .btn-search:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 20px;
+    }
+    
+    /* Categories */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    
+    .category-card {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: var(--text);
+    }
+    
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+    
+    .category-icon {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Products Grid */
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      background: #f0f0f0;
+    }
+    
+    .product-badges {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: var(--white);
+    }
+    
+    .badge-new { background: var(--success); }
+    .badge-sale { background: var(--danger); }
+    .badge-featured { background: var(--warning); }
+    
+    .product-info {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    
+    .product-description {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .product-price-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .product-price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .product-original-price {
+      font-size: 1rem;
+      color: var(--text-light);
+      text-decoration: line-through;
+    }
+    
+    .product-discount {
+      background: var(--danger);
+      color: var(--white);
+      padding: 0.2rem 0.5rem;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .product-stock {
+      font-size: 0.85rem;
+      color: var(--success);
+      margin-bottom: 1rem;
+    }
+    
+    .product-stock.low {
+      color: var(--warning);
+    }
+    
+    .product-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .btn {
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      text-align: center;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+      flex: 1;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      font-size: 1.2rem;
+      color: var(--text-light);
+    }
+    
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--text);
+      color: var(--white);
+      padding: 3rem 20px 1rem;
+      margin-top: 4rem;
+    }
+    
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    
+    .footer-section p,
+    .footer-section a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-section a:hover {
+      color: var(--white);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .search-bar { flex-direction: column; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+      nav { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <span>🏋️</span>
+        <span>OriFit Store</span>
+      </a>
+      <nav>
+        <a href="index.html">🏠 الرئيسية</a>
+        <a href="cart.html">
+          🛒 السلة
+          <span class="cart-badge" id="cartCount">0</span>
+        </a>
+        <a href="order.html">📦 الطلبات</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>🏋️ مرحباً بك في متجر OriFit</h1>
+    <p>أفضل منتجات اللياقة البدنية في المغرب بأسعار تنافسية</p>
+    <div class="hero-features">
+      <div class="hero-feature">📦 شحن مجاني فوق 500 د.م.</div>
+      <div class="hero-feature">✅ منتجات أصلية 100%</div>
+      <div class="hero-feature">🚚 توصيل سريع 2-5 أيام</div>
+      <div class="hero-feature">💳 الدفع عند الاستلام</div>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <div class="search-section">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="ابحث عن منتج...">
+      <select id="categoryFilter">
+        <option value="">جميع الفئات</option>
+      </select>
+      <button class="btn-search" onclick="searchProducts()">بحث</button>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Categories -->
+    <h2 class="section-title">📂 الفئات</h2>
+    <div class="categories" id="categoriesContainer">
+      <div class="loading">
+        <div class="spinner"></div>
+        جاري تحميل الفئات...
+      </div>
+    </div>
+
+    <!-- Featured Products -->
+    <h2 class="section-title">⭐ المنتجات المميزة</h2>
+    <div class="products-grid" id="featuredProducts">
+      <div class="loading">
+        <div class="spinner"></div>
+        جاري تحميل المنتجات...
+      </div>
+    </div>
+
+    <!-- All Products -->
+    <h2 class="section-title">🛍️ جميع المنتجات</h2>
+    <div class="products-grid" id="allProducts">
+      <div class="loading">
+        <div class="spinner"></div>
+        جاري تحميل المنتجات...
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>🏋️ OriFit Store</h3>
+        <p>متجرك الموثوق لمنتجات اللياقة البدنية في المغرب</p>
+        <div class="social-links">
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>روابط سريعة</h3>
+        <a href="index.html">الرئيسية</a>
+        <a href="cart.html">السلة</a>
+        <a href="order.html">الطلبات</a>
+      </div>
+      <div class="footer-section">
+        <h3>اتصل بنا</h3>
+        <p>📞 +212 6XX XXX XXX</p>
+        <p>📧 info@orifit.ma</p>
+        <p>📍 المغرب</p>
+      </div>
+      <div class="footer-section">
+        <h3>معلومات</h3>
+        <a href="#">من نحن</a>
+        <a href="#">سياسة الخصوصية</a>
+        <a href="#">الشروط والأحكام</a>
+        <a href="#">سياسة الإرجاع</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 OriFit Store. جميع الحقوق محفوظة. Made with ❤️ in Morocco 🇲🇦</p>
+    </div>
+  </footer>
+
+  <script src="translations.js"></script>
+  <script>
+    const API_URL = OriFitConfig.WORKER_URL;
+    let allProductsData = [];
+    let categoriesData = [];
+
+    // Update cart count on load
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('orifit_cart') || '[]');
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cartCount').textContent = count;
+    }
+
+    // Load categories
+    async function loadCategories() {
+      try {
+        const response = await fetch(`${API_URL}/api/categories`);
+        const data = await response.json();
+        
+        if (data.success) {
+          categoriesData = data.data;
+          displayCategories(data.data);
+          populateCategoryFilter(data.data);
+        }
+      } catch (error) {
+        console.error('Error loading categories:', error);
+        document.getElementById('categoriesContainer').innerHTML = 
+          '<p style="color: var(--danger); text-align: center;">فشل تحميل الفئات</p>';
+      }
+    }
+
+    // Display categories
+    function displayCategories(categories) {
+      const container = document.getElementById('categoriesContainer');
+      
+      if (categories.length === 0) {
+        container.innerHTML = '<p>لا توجد فئات متاحة</p>';
+        return;
+      }
+      
+      container.innerHTML = categories.map(cat => `
+        <div class="category-card" onclick="filterByCategory(${cat.id})">
+          <div class="category-icon">${cat.icon || '📦'}</div>
+          <div>${cat.name_ar}</div>
+        </div>
+      `).join('');
+    }
+
+    // Populate category filter
+    function populateCategoryFilter(categories) {
+      const select = document.getElementById('categoryFilter');
+      categories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.id;
+        option.textContent = cat.name_ar;
+        select.appendChild(option);
+      });
+    }
+
+    // Load featured products
+    async function loadFeaturedProducts() {
+      try {
+        const response = await fetch(`${API_URL}/api/products?featured=true&limit=4`);
+        const data = await response.json();
+        
+        if (data.success) {
+          displayProducts(data.data, 'featuredProducts');
+        }
+      } catch (error) {
+        console.error('Error loading featured products:', error);
+        document.getElementById('featuredProducts').innerHTML = 
+          '<p style="color: var(--danger);">فشل تحميل المنتجات المميزة</p>';
+      }
+    }
+
+    // Load all products
+    async function loadAllProducts() {
+      try {
+        const response = await fetch(`${API_URL}/api/products?limit=20`);
+        const data = await response.json();
+        
+        if (data.success) {
+          allProductsData = data.data;
+          displayProducts(data.data, 'allProducts');
+        }
+      } catch (error) {
+        console.error('Error loading products:', error);
+        document.getElementById('allProducts').innerHTML = 
+          '<p style="color: var(--danger);">فشل تحميل المنتجات</p>';
+      }
+    }
+
+    // Display products
+    function displayProducts(products, containerId) {
+      const container = document.getElementById(containerId);
+      
+      if (products.length === 0) {
+        container.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">لا توجد منتجات</p>';
+        return;
+      }
+      
+      container.innerHTML = products.map(product => {
+        const discount = calculateDiscount(product.original_price, product.price);
+        const stockStatus = product.stock === 0 ? 'نفذت الكمية' : 
+                           product.stock <= 5 ? `متبقي ${product.stock} فقط` : 
+                           'متوفر';
+        const stockClass = product.stock === 0 ? '' : product.stock <= 5 ? 'low' : '';
+        
+        return `
+          <div class="product-card">
+            <div style="position: relative;">
+              <img src="${getImageUrl(product.image_key)}" alt="${product.name_ar}" class="product-image">
+              <div class="product-badges">
+                ${product.is_new ? '<span class="badge badge-new">جديد</span>' : ''}
+                ${discount > 0 ? `<span class="badge badge-sale">-${discount}%</span>` : ''}
+                ${product.is_featured ? '<span class="badge badge-featured">مميز</span>' : ''}
+              </div>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">${product.name_ar}</h3>
+              <p class="product-description">${product.short_description_ar || product.description_ar}</p>
+              
+              <div class="product-price-row">
+                <span class="product-price">${formatPrice(product.price)}</span>
+                ${product.original_price ? `
+                  <span class="product-original-price">${formatPrice(product.original_price)}</span>
+                  <span class="product-discount">-${discount}%</span>
+                ` : ''}
+              </div>
+              
+              <div class="product-stock ${stockClass}">
+                📦 ${stockStatus}
+              </div>
+              
+              <div class="product-actions">
+                ${product.stock > 0 ? `
+                  <button class="btn btn-primary" onclick="addToCart(${product.id}, '${product.name_ar}', ${product.price}, '${product.image_key}', ${product.stock})">
+                    أضف للسلة
+                  </button>
+                ` : `
+                  <button class="btn btn-primary" disabled style="opacity: 0.5; cursor: not-allowed;">
+                    نفذت الكمية
+                  </button>
+                `}
+                <a href="product.html?id=${product.id}" class="btn btn-outline">
+                  تفاصيل
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Add to cart
+    function addToCart(id, name, price, imageKey, maxStock) {
+      let cart = JSON.parse(localStorage.getItem('orifit_cart') || '[]');
+      
+      const existingItem = cart.find(item => item.id === id);
+      
+      if (existingItem) {
+        if (existingItem.quantity < maxStock) {
+          existingItem.quantity++;
+          showToast('تم تحديث الكمية في السلة', 'success');
+        } else {
+          showToast('لا يمكن إضافة المزيد - الحد الأقصى متوفر', 'warning');
+          return;
+        }
+      } else {
+        cart.push({ 
+          id, 
+          name, 
+          price, 
+          image_key: imageKey, 
+          quantity: 1,
+          maxStock 
+        });
+        showToast('تمت الإضافة إلى السلة بنجاح', 'success');
+      }
+      
+      localStorage.setItem('orifit_cart', JSON.stringify(cart));
+      updateCartCount();
+    }
+
+    // Filter by category
+    function filterByCategory(categoryId) {
+      const filtered = allProductsData.filter(p => p.category_id === categoryId);
+      displayProducts(filtered, 'allProducts');
+      
+      // Scroll to products
+      document.getElementById('allProducts').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Search products
+    function searchProducts() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const categoryId = document.getElementById('categoryFilter').value;
+      
+      let filtered = allProductsData;
+      
+      if (categoryId) {
+        filtered = filtered.filter(p => p.category_id === parseInt(categoryId));
+      }
+      
+      if (searchTerm) {
+        filtered = filtered.filter(p => 
+          p.name_ar.toLowerCase().includes(searchTerm) ||
+          (p.description_ar && p.description_ar.toLowerCase().includes(searchTerm))
+        );
+      }
+      
+      displayProducts(filtered, 'allProducts');
+      
+      // Scroll to results
+      document.getElementById('allProducts').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Event listeners
+    document.getElementById('searchInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') searchProducts();
+    });
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      updateCartCount();
+      loadCategories();
+      loadFeaturedProducts();
+      loadAllProducts();
+    });
+  </script>
+</body>
+</html>
