@@ -8,7 +8,7 @@ nodejs_compat = true
 [[d1_databases]]
 binding = "DB"
 database_name = "orifit-db"
-database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" # ⬅️ ضع ID هنا
+database_id = "dcbacf89-5839-476a-8b76-aff356faf80c" # ⬅️ ضع ID هنا
 
 # ⚠️ استبدل بـ R2 Bucket Name الخاص بك
 # أنشئه بالأمر: wrangler r2 bucket create orifit-images
@@ -18,7 +18,8 @@ bucket_name = "orifit-images"
 
 # متغيرات البيئة (للأمان)
 [vars]
-ADMIN_API_KEY = "your-secret-admin-key-here" # ⬅️ غيّر هذا المفتاح
+ADMIN_API_KEY = "8d32834f8626ead789b54181cd25c13a" # ⬅️ غيّر هذا المفتاح
 
 # Pages Configuration (لربطها مع Worker)
 pages_build_output_dir = "public"
+
