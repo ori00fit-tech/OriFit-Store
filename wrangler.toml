@@ -1,7 +1,7 @@
 name = "orifit-store"
 main = "src/index.ts"
-compatibility_date = "2025-01-07"
-nodejs_compat = true
+compatibility_date = "2026-01-07"
+compatibility_flags = ["nodejs_compat"]
 
 [[d1_databases]]
 binding = "DB"
@@ -14,3 +14,4 @@ bucket_name = "orifit-images"
 
 [vars]
 ADMIN_API_KEY = "8d32834f8626ead789b54181cd25c13a"
+
