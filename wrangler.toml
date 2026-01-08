@@ -1,25 +1,23 @@
 name = "orifit-store"
 main = "src/index.ts"
 compatibility_date = "2025-01-07"
-nodejs_compat = true
 
-# ⚠️ استبدل بـ Database ID الخاص بك بعد إنشائه
-# أنشئه بالأمر: wrangler d1 create orifit-db
+# D1 Database
 [[d1_databases]]
 binding = "DB"
 database_name = "orifit-db"
-database_id = "dcbacf89-5839-476a-8b76-aff356faf80c" # ⬅️ ضع ID هنا
+database_id = "dcbacf89-5839-476a-8b76-aff356faf80c"
 
-# ⚠️ استبدل بـ R2 Bucket Name الخاص بك
-# أنشئه بالأمر: wrangler r2 bucket create orifit-images
+# R2 Bucket
 [[r2_buckets]]
 binding = "R2_BUCKET"
 bucket_name = "orifit-images"
 
-# متغيرات البيئة (للأمان)
+# Environment Variables
 [vars]
-ADMIN_API_KEY = "8d32834f8626ead789b54181cd25c13a" # ⬅️ غيّر هذا المفتاح
+ADMIN_API_KEY = "8d32834f8626ead789b54181cd25c13a"
 
-# Pages Configuration (لربطها مع Worker)
-pages_build_output_dir = "public"
-
+# Pages Configuration
+[build.upload]
+format = "service-worker"
+dir = "public"
