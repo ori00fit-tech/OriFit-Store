@@ -1,7 +1,7 @@
 name = "orifit-store"
 main = "src/index.ts"
 compatibility_date = "2025-01-07"
-node_compat = true
+nodejs_compat = true
 
 # ⚠️ استبدل بـ Database ID الخاص بك بعد إنشائه
 # أنشئه بالأمر: wrangler d1 create orifit-db
@@ -21,5 +21,4 @@ bucket_name = "orifit-images"
 ADMIN_API_KEY = "your-secret-admin-key-here" # ⬅️ غيّر هذا المفتاح
 
 # Pages Configuration (لربطها مع Worker)
-[pages_build_output_dir]
-dir = "public"
+pages_build_output_dir = "public"
