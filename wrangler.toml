@@ -2,22 +2,21 @@ name = "orifit-store"
 main = "src/index.ts"
 compatibility_date = "2025-01-07"
 
-# D1 Database
 [[d1_databases]]
 binding = "DB"
 database_name = "orifit-db"
 database_id = "dcbacf89-5839-476a-8b76-aff356faf80c"
 
-# R2 Bucket
 [[r2_buckets]]
 binding = "R2_BUCKET"
 bucket_name = "orifit-images"
 
-# Environment Variables
 [vars]
 ADMIN_API_KEY = "8d32834f8626ead789b54181cd25c13a"
 
-# Pages Configuration
+# Pages build
+[build]
+command = ""  # ما كاينش build command
 [build.upload]
 format = "service-worker"
 dir = "public"
