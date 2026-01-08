@@ -1,0 +1,25 @@
+{
+  "name": "orifit-store",
+  "version": "1.0.0",
+  "description": "متجر OriFit للياقة البدنية على Cloudflare",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create orifit-db",
+    "db:migrate": "wrangler d1 execute orifit-db --file=migrations/0001_initial.sql",
+    "db:seed": "node scripts/seed.js",
+    "pages:deploy": "wrangler pages deploy public"
+  },
+  "keywords": ["ecommerce", "cloudflare", "morocco", "fitness"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "hono": "^3.12.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240512.0",
+    "wrangler": "^3.80.0",
+    "typescript": "^5.4.5"
+  }
+}
