@@ -11,15 +11,20 @@
     "db:seed": "node scripts/seed.js",
     "pages:deploy": "wrangler pages deploy public"
   },
-  "keywords": ["ecommerce", "cloudflare", "morocco", "fitness"],
+  "keywords": [
+    "ecommerce",
+    "cloudflare",
+    "morocco",
+    "fitness"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "hono": "^3.12.0"
+    "hono": "^4.11.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240512.0",
-    "wrangler": "^3.80.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "wrangler": "^4.58.0"
   }
 }
