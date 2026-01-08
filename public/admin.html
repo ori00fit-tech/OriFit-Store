@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم - OriFit Store</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💼</text></svg>">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #667eea;
+      --primary-dark: #5568d3;
+      --secondary: #764ba2;
+      --success: #4caf50;
+      --danger: #f44336;
+      --warning: #ff9800;
+      --info: #2196f3;
+      --text: #333;
+      --text-light: #666;
+      --bg: #f5f5f5;
+      --white: #ffffff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+      --radius: 12px;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: var(--white);
+      padding: 1.5rem 0;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo { font-size: 1.5rem; font-weight: bold; }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .logout-btn {
+      padding: 0.5rem 1rem;
+      background: rgba(255,255,255,0.2);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    /* Login Form */
+    .login-container {
+      max-width: 400px;
+      margin: 5rem auto;
+      padding: 2rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    
+    .login-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--radius);
+      font-size: 1rem;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .login-btn:hover {
+      transform: scale(1.02);
+    }
+    
+    /* Dashboard */
+    .dashboard {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 20px;
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #e0e0e0;
+      flex-wrap: wrap;
+    }
+    
+    .tab {
+      padding: 1rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s;
+    }
+    
+    .tab:hover {
+      color: var(--primary);
+    }
+    
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 1.8rem;
+    }
+    
+    .stat-icon.primary { background: rgba(102, 126, 234, 0.1); }
+    .stat-icon.success { background: rgba(76, 175, 80, 0.1); }
+    .stat-icon.warning { background: rgba(255, 152, 0, 0.1); }
+    .stat-icon.danger { background: rgba(244, 67, 54, 0.1); }
+    
+    .stat-info h3 {
+      font-size: 2rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    
+    .stat-info p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    /* Table */
+    .table-container {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    
+    .table-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .table-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    
+    .table-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+    
+    .btn-success {
+      background: var(--success);
+      color: var(--white);
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+      color: var(--white);
+    }
+    
+    .btn-sm {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    thead {
+      background: #f5f5f5;
+    }
+    
+    th, td {
+      padding: 1rem;
+      text-align: right;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    th {
+      font-weight: bold;
+      color: var(--text);
+    }
+    
+    tbody tr:hover {
+      background: #f9f9f9;
+    }
+    
+    .status-badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      display: inline-block;
+    }
+    
+    .status-pending { background: #fff3e0; color: #e65100; }
+    .status-confirmed { background: #e3f2fd; color: #1565c0; }
+    .status-preparing { background: #f3e5f5; color: #6a1b9a; }
+    .status-shipped { background: #e0f2f1; color: #00695c; }
+    .status-delivered { background: #e8f5e9; color: #2e7d32; }
+    .status-cancelled { background: #ffebee; color: #c62828; }
+    
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-light);
+    }
+    
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .close-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+    
+    .close-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    select.form-input {
+      cursor: pointer;
+    }
+    
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      table {
+        font-size: 0.9rem;
+      }
+      
+      th, td {
+        padding: 0.7rem;
+      }
+      
+      .tabs {
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Form -->
+  <div id="loginForm" style="display: none;">
+    <div class="login-container">
+      <h1 class="login-title">🔐 تسجيل الدخول للوحة التحكم</h1>
+      <form onsubmit="login(event)">
+        <div class="form-group">
+          <label class="form-label">مفتاح API</label>
+          <input type="password" class="form-input" id="apiKeyInput" 
+                 placeholder="أدخل مفتاح API الإداري" required>
+        </div>
+        <button type="submit" class="login-btn">دخول</button>
+      </form>
+      <div style="text-align: center; margin-top: 1rem;">
+        <a href="index.html" style="color: var(--primary);">← العودة للمتجر</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" style="display: none;">
+    <header>
+      <div class="header-content">
+        <div class="logo">👨‍💼 لوحة التحكم - OriFit</div>
+        <div class="user-info">
+          <span>مرحباً، المدير</span>
+          <button class="logout-btn" onclick="logout()">خروج</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('stats')">📊 الإحصائيات</button>
+        <button class="tab" onclick="switchTab('orders')">📦 الطلبات</button>
+        <button class="tab" onclick="switchTab('products')">🛍️ المنتجات</button>
+        <button class="tab" onclick="switchTab('customers')">👥 العملاء</button>
+      </div>
+
+      <!-- Stats Tab -->
+      <div id="statsTab" class="tab-content active">
+        <div class="stats-grid" id="statsGrid">
+          <div class="loading">
+            <div class="spinner"></div>
+            جاري تحميل الإحصائيات...
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Tab -->
+      <div id="ordersTab" class="tab-content">
+        <div class="table-container">
+          <div class="table-header">
+            <h2 class="table-title">📦 إدارة الطلبات</h2>
+            <div class="table-actions">
+              <select onchange="filterOrders(this.value)" class="form-input" style="width: auto;">
+                <option value="">جميع الطلبات</option>
+                <option value="قيد المراجعة">قيد المراجعة</option>
+                <option value="مؤكد">مؤكد</option>
+                <option value="جاري التحضير">جاري التحضير</option>
+                <option value="تم الشحن">تم الشحن</option>
+                <option value="تم التسليم">تم التسليم</option>
+                <option value="ملغي">ملغي</option>
+              </select>
+            </div>
+          </div>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>رقم الطلب</th>
+                  <th>العميل</th>
+                  <th>الهاتف</th>
+                  <th>المدينة</th>
+                  <th>المبلغ</th>
+                  <th>الحالة</th>
+                  <th>التاريخ</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <tr>
+                  <td colspan="8">
+                    <div class="loading">
+                      <div class="spinner"></div>
+                      جاري تحميل الطلبات...
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Tab -->
+      <div id="productsTab" class="tab-content">
+        <div class="table-container">
+          <div class="table-header">
+            <h2 class="table-title">🛍️ إدارة المنتجات</h2>
+            <button class="btn btn-primary" onclick="alert('قريباً: إضافة منتج جديد')">
+              ➕ منتج جديد
+            </button>
+          </div>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>الصورة</th>
+                  <th>الاسم</th>
+                  <th>الفئة</th>
+                  <th>السعر</th>
+                  <th>المخزون</th>
+                  <th>المبيعات</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="productsTableBody">
+                <tr>
+                  <td colspan="7">
+                    <div class="loading">
+                      <div class="spinner"></div>
+                      جاري تحميل المنتجات...
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customers Tab -->
+      <div id="customersTab" class="tab-content">
+        <div class="table-container">
+          <div class="table-header">
+            <h2 class="table-title">👥 قائمة العملاء</h2>
+          </div>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>الاسم</th>
+                  <th>الهاتف</th>
+                  <th>المدينة</th>
+                  <th>عدد الطلبات</th>
+                  <th>إجمالي الإنفاق</th>
+                  <th>تاريخ التسجيل</th>
+                </tr>
+              </thead>
+              <tbody id="customersTableBody">
+                <tr>
+                  <td colspan="6">
+                    <div class="loading">
+                      <div class="spinner"></div>
+                      جاري تحميل العملاء...
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Status Modal -->
+  <div id="statusModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">تحديث حالة الطلب</h3>
+        <button class="close-btn" onclick="closeModal()">×</button>
+      </div>
+      <form onsubmit="updateOrderStatus(event)">
+        <input type="hidden" id="modalOrderId">
+        <div class="form-group">
+          <label class="form-label">الحالة الجديدة</label>
+          <select class="form-input" id="modalStatus" required>
+            <option value="قيد المراجعة">قيد المراجعة</option>
+            <option value="مؤكد">مؤكد</option>
+            <option value="جاري التحضير">جاري التحضير</option>
+            <option value="تم الشحن">تم الشحن</option>
+            <option value="في الطريق">في الطريق</option>
+            <option value="تم التسليم">تم التسليم</option>
+            <option value="ملغي">ملغي</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ملاحظات (اختياري)</label>
+          <textarea class="form-input" id="modalNotes" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          حفظ التغييرات
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="translations.js"></script>
+  <script>
+    const API_URL = OriFitConfig.WORKER_URL;
+    let apiKey = localStorage.getItem('orifit_admin_key');
+    let allOrders = [];
+
+    // Check if logged in
+    function checkAuth() {
+      if (!apiKey) {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('dashboard').style.display = 'none';
+      } else {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        loadStats();
+        loadOrders();
+      }
+    }
+
+    // Login
+    async function login(e) {
+      e.preventDefault();
+      const key = document.getElementById('apiKeyInput').value;
+      
+      try {
+        const response = await fetch(`${API_URL}/api/admin/stats`, {
+          headers: { 'Authorization': `Bearer ${key}` }
+        });
+        
+        if (response.ok) {
+          localStorage.setItem('orifit_admin_key', key);
+          apiKey = key;
+          showToast('تم تسجيل الدخول بنجاح', 'success');
+          checkAuth();
+        } else {
+          showToast('مفتاح API غير صحيح', 'error');
+        }
+      } catch (error) {
+        showToast('خطأ في الاتصال', 'error');
+      }
+    }
+
+    // Logout
+    function logout() {
+      localStorage.removeItem('orifit_admin_key');
+      apiKey = null;
+      checkAuth();
+    }
+
+    // Switch Tab
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById(tabName + 'Tab').classList.add('active');
+      
+      if (tabName === 'products') loadProducts();
+      if (tabName === 'customers') loadCustomers();
+    }
+
+    // Load Stats
+    async function loadStats() {
+      try {
+        const response = await fetch(`${API_URL}/api/admin/stats`, {
+          headers: { 'Authorization': `Bearer ${apiKey}` }
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          document.getElementById('statsGrid').innerHTML = `
+            <div class="stat-card">
+              <div class="stat-icon primary">📦</div>
+              <div class="stat-info">
+                <h3>${data.data.total_orders}</h3>
+                <p>إجمالي الطلبات</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon success">💰</div>
+              <div class="stat-info">
+                <h3>${formatPrice(data.data.total_revenue)}</h3>
+                <p>إجمالي المبيعات</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon warning">⏳</div>
+              <div class="stat-info">
+                <h3>${data.data.pending_orders}</h3>
+                <p>طلبات قيد المراجعة</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon primary">🛍️</div>
+              <div class="stat-info">
+                <h3>${data.data.total_products}</h3>
+                <p>المنتجات المتاحة</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon danger">⚠️</div>
+              <div class="stat-info">
+                <h3>${data.data.low_stock_products}</h3>
+                <p>منتجات قليلة المخزون</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon success">👥</div>
+              <div class="stat-info">
+                <h3>${data.data.total_customers}</h3>
+                <p>إجمالي العملاء</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon primary">📅</div>
+              <div class="stat-info">
+                <h3>${data.data.today_orders}</h3>
+                <p>طلبات اليوم</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon success">💵</div>
+              <div class="stat-info">
+                <h3>${formatPrice(data.data.today_revenue || 0)}</h3>
+                <p>مبيعات اليوم</p>
+              </div>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('Stats error:', error);
+      }
+    }
+
+    // Load Orders
+    async function loadOrders(status = '') {
+      try {
+        const url = status ? `${API_URL}/api/admin/orders?status=${status}` : `${API_URL}/api/admin/orders`;
+        const response = await fetch(url, {
+          headers: { 'Authorization': `Bearer ${apiKey}` }
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          allOrders = data.data;
+          displayOrders(data.data);
+        }
+      } catch (error) {
+        console.error('Orders error:', error);
+      }
+    }
+
+    // Display Orders
+    function displayOrders(orders) {
+      const tbody = document.getElementById('ordersTableBody');
+      
+      if (orders.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem;">لا توجد طلبات</td></tr>';
+        return;
+      }
+      
+      tbody.innerHTML = orders.map(order => {
+        const statusClass = {
+          'قيد المراجعة': 'status-pending',
+          'مؤكد': 'status-confirmed',
+          'جاري التحضير': 'status-preparing',
+          'تم الشحن': 'status-shipped',
+          'في الطريق': 'status-shipped',
+          'تم التسليم': 'status-delivered',
+          'ملغي': 'status-cancelled'
+        }[order.status] || 'status-pending';
+        
+        return `
+          <tr>
+            <td><strong>${order.order_id}</strong></td>
+            <td>${order.customer_name}</td>
+            <td>${order.phone}</td>
+            <td>${order.city}</td>
+            <td><strong>${formatPrice(order.total_amount)}</strong></td>
+            <td><span class="status-badge ${statusClass}">${order.status}</span></td>
+            <td>${formatDate(order.created_at)}</td>
+            <td>
+              <button class="btn btn-sm btn-primary" onclick="openStatusModal('${order.order_id}', '${order.status}')">
+                تحديث
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Filter Orders
+    function filterOrders(status) {
+      if (status) {
+        const filtered = allOrders.filter(o => o.status === status);
+        displayOrders(filtered);
+      } else {
+        displayOrders(allOrders);
+      }
+    }
+
+    // Open Status Modal
+    function openStatusModal(orderId, currentStatus) {
+      document.getElementById('modalOrderId').value = orderId;
+      document.getElementById('modalStatus').value = currentStatus;
+      document.getElementById('modalNotes').value = '';
+      document.getElementById('statusModal').classList.add('active');
+    }
+
+    // Close Modal
+    function closeModal() {
+      document.getElementById('statusModal').classList.remove('active');
+    }
+
+    // Update Order Status
+    async function updateOrderStatus(e) {
+      e.preventDefault();
+      
+      const orderId = document.getElementById('modalOrderId').value;
+      const status = document.getElementById('modalStatus').value;
+      const notes = document.getElementById('modalNotes').value;
+      
+      try {
+        const response = await fetch(`${API_URL}/api/admin/orders/${orderId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status, notes })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          showToast('تم تحديث الحالة بنجاح', 'success');
+          closeModal();
+          loadOrders();
+          loadStats();
+        } else {
+          showToast(data.error, 'error');
+        }
+      } catch (error) {
+        showToast('خطأ في التحديث', 'error');
+      }
+    }
+
+    // Load Products
+    async function loadProducts() {
+      try {
+        const response = await fetch(`${API_URL}/api/products`);
+        const data = await response.json();
+        
+        if (data.success) {
+          const tbody = document.getElementById('productsTableBody');
+          tbody.innerHTML = data.data.map(p => `
+            <tr>
+              <td><img src="${getImageUrl(p.image_key)}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"></td>
+              <td><strong>${p.name_ar}</strong></td>
+              <td>${p.category_name || '-'}</td>
+              <td><strong>${formatPrice(p.price)}</strong></td>
+              <td>${p.stock}</td>
+              <td>${p.sales_count || 0}</td>
+              <td>
+                <button class="btn btn-sm btn-primary" onclick="alert('قريباً: تعديل المنتج')">تعديل</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Products error:', error);
+      }
+    }
+
+    // Load Customers
+    async function loadCustomers() {
+      try {
+        const response = await fetch(`${API_URL}/api/admin/customers`, {
+          headers: { 'Authorization': `Bearer ${apiKey}` }
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          const tbody = document.getElementById('customersTableBody');
+          tbody.innerHTML = data.data.map(c => `
+            <tr>
+              <td><strong>${c.name}</strong></td>
+              <td>${c.phone}</td>
+              <td>${c.city || '-'}</td>
+              <td>${c.total_orders}</td>
+              <td><strong>${formatPrice(c.total_spent)}</strong></td>
+              <td>${formatDate(c.created_at)}</td>
+            </tr>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Customers error:', error);
+      }
+    }
+
+    // Initialize
+    checkAuth();
+  </script>
+</body>
+</html>
