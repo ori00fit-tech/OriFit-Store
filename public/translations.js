@@ -1,7 +1,7 @@
 // ⚠️ استبدل هذه القيم بالروابط الحقيقية بعد النشر
 const CONFIG = {
-  WORKER_URL: 'https://orifit-store.your-account.workers.dev', // ⬅️ رابط الـ Worker
-  R2_PUBLIC_URL: 'https://pub-xxxxx.r2.dev', // ⬅️ رابط R2 العام
+  WORKER_URL: 'https://orifit-store.ori00fit.workers.dev' , // ⬅️ رابط الـ Worker
+  R2_PUBLIC_URL: 'https://pub-f69e6c0bdca04030a28d7f95690ff12f.r2.dev', // ⬅️ رابط R2 العام
   CURRENCY: {
     code: 'MAD',
     symbol: 'د.م.',
@@ -92,3 +92,4 @@ window.translations = translations;
 window.formatPrice = formatPrice;
 window.calculateShipping = calculateShipping;
 window.getImageUrl = getImageUrl;
+
