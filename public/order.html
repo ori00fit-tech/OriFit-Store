@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إتمام الطلب - OriFit Store</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #667eea;
+      --primary-dark: #5568d3;
+      --secondary: #764ba2;
+      --success: #4caf50;
+      --danger: #f44336;
+      --text: #333;
+      --text-light: #666;
+      --bg: #f5f5f5;
+      --white: #ffffff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+      --radius: 12px;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: var(--white);
+      padding: 1.5rem 0;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .header-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px 3rem;
+    }
+    
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 2rem;
+    }
+    
+    .form-section {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: var(--text);
+    }
+    
+    .required {
+      color: var(--danger);
+    }
+    
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.3s;
+    }
+    
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    
+    .form-hint {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 0.3rem;
+    }
+    
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .payment-option {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .payment-option:hover {
+      border-color: var(--primary);
+      background: #f5f5f5;
+    }
+    
+    .payment-option input[type="radio"] {
+      margin-left: 1rem;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    
+    .payment-option.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .payment-icon {
+      font-size: 1.5rem;
+      margin-left: 0.5rem;
+    }
+    
+    .order-summary {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 2rem;
+      height: fit-content;
+    }
+    
+    .cart-items {
+      margin-bottom: 1.5rem;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    
+    .item-image {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    
+    .item-details {
+      flex: 1;
+    }
+    
+    .item-name {
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+      font-size: 0.95rem;
+    }
+    
+    .item-price {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      color: var(--text-light);
+    }
+    
+    .summary-row strong {
+      color: var(--text);
+    }
+    
+    .summary-divider {
+      height: 1px;
+      background: #e0e0e0;
+      margin: 1rem 0;
+    }
+    
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .submit-btn:hover:not(:disabled) {
+      transform: scale(1.02);
+    }
+    
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .success-message {
+      background: var(--white);
+      padding: 3rem 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    
+    .success-icon {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .success-message h2 {
+      color: var(--success);
+      margin-bottom: 1rem;
+    }
+    
+    .order-id {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: var(--radius);
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 1.5rem 0;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .btn-secondary {
+      background: var(--white);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    
+    @media (max-width: 768px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .order-summary {
+        position: static;
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>📦 إتمام الطلب</h1>
+    </div>
+  </header>
+
+  <div class="container">
+    <div id="checkoutContainer"></div>
+  </div>
+
+  <script src="translations.js"></script>
+  <script>
+    const API_URL = OriFitConfig.WORKER_URL;
+    let cart = JSON.parse(localStorage.getItem('orifit_cart') || '[]');
+    let orderData = {};
+
+    function renderCheckout() {
+      if (cart.length === 0) {
+        document.getElementById('checkoutContainer').innerHTML = `
+          <div class="success-message">
+            <div class="success-icon">🛒</div>
+            <h2>السلة فارغة</h2>
+            <p style="color: var(--text-light); margin: 1rem 0;">
+              لم تضف أي منتجات بعد. ابدأ التسوق الآن!
+            </p>
+            <a href="index.html" class="btn btn-primary">تصفح المنتجات</a>
+          </div>
+        `;
+        return;
+      }
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const defaultShipping = OriFitConfig.SHIPPING.defaultCost;
+      
+      document.getElementById('checkoutContainer').innerHTML = `
+        <div class="checkout-grid">
+          <div>
+            <div class="form-section">
+              <h2 class="section-title">👤 معلومات العميل</h2>
+              <form id="orderForm">
+                <div class="form-group">
+                  <label class="form-label">الاسم الكامل <span class="required">*</span></label>
+                  <input type="text" class="form-input" id="customerName" required 
+                         placeholder="مثال: أحمد الحسني">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">رقم الهاتف <span class="required">*</span></label>
+                  <input type="tel" class="form-input" id="customerPhone" required 
+                         placeholder="مثال: 0612345678 أو +212612345678">
+                  <div class="form-hint">سنتصل بك لتأكيد الطلب</div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">البريد الإلكتروني</label>
+                  <input type="email" class="form-input" id="customerEmail" 
+                         placeholder="مثال: ahmed@example.com">
+                  <div class="form-hint">اختياري - لإرسال تفاصيل الطلب</div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">المدينة <span class="required">*</span></label>
+                  <select class="form-select" id="customerCity" required onchange="updateShipping()">
+                    <option value="">اختر المدينة</option>
+                    ${OriFitConfig.CITIES.map(city => `<option value="${city}">${city}</option>`).join('')}
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">العنوان الكامل <span class="required">*</span></label>
+                  <textarea class="form-textarea" id="customerAddress" required 
+                            placeholder="مثال: شارع محمد الخامس، رقم 123، الشقة 5"></textarea>
+                  <div class="form-hint">يرجى كتابة العنوان بالتفصيل لتسهيل التوصيل</div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">الرمز البريدي</label>
+                  <input type="text" class="form-input" id="customerPostalCode" 
+                         placeholder="مثال: 10000">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">ملاحظات إضافية</label>
+                  <textarea class="form-textarea" id="orderNotes" 
+                            placeholder="أي ملاحظات خاصة بالطلب (اختياري)"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="form-section" style="margin-top: 2rem;">
+              <h2 class="section-title">💳 طريقة الدفع</h2>
+              <div class="payment-methods">
+                ${OriFitConfig.PAYMENT_METHODS.map(method => `
+                  <label class="payment-option ${method.disabled ? 'disabled' : ''}" 
+                         style="opacity: ${method.disabled ? '0.5' : '1'}">
+                    <input type="radio" name="payment" value="${method.value}" 
+                           ${method.value === 'cod' ? 'checked' : ''} 
+                           ${method.disabled ? 'disabled' : ''}>
+                    <span class="payment-icon">${method.icon}</span>
+                    <div>
+                      <strong>${method.label}</strong>
+                      ${method.disabled ? '<div style="font-size: 0.85rem; color: var(--text-light);">قريباً</div>' : ''}
+                    </div>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div class="order-summary">
+            <h3 class="section-title">📋 ملخص الطلب</h3>
+            
+            <div class="cart-items">
+              ${cart.map(item => `
+                <div class="cart-item">
+                  <img src="${getImageUrl(item.image_key)}" alt="${item.name}" class="item-image">
+                  <div class="item-details">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-price">
+                      ${formatPrice(item.price)} × ${item.quantity} = ${formatPrice(item.price * item.quantity)}
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-row">
+              <span>المجموع الفرعي:</span>
+              <strong id="subtotalDisplay">${formatPrice(subtotal)}</strong>
+            </div>
+
+            <div class="summary-row">
+              <span>الشحن:</span>
+              <strong id="shippingDisplay">${formatPrice(defaultShipping)}</strong>
+            </div>
+
+            <div class="summary-row" id="freeShippingNotice" style="display: none; color: var(--success); font-weight: bold;">
+              <span>🎉 شحن مجاني!</span>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total">
+              <span>المجموع الكلي:</span>
+              <span id="totalDisplay">${formatPrice(subtotal + defaultShipping)}</span>
+            </div>
+
+            <button class="submit-btn" onclick="submitOrder()">
+              ✅ تأكيد الطلب
+            </button>
+
+            <div style="text-align: center; margin-top: 1rem;">
+              <a href="cart.html" style="color: var(--primary); text-decoration: none;">
+                ← تعديل السلة
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateShipping() {
+      const city = document.getElementById('customerCity').value;
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      const shippingCost = calculateShipping(subtotal, city);
+      const total = subtotal + shippingCost;
+      
+      document.getElementById('shippingDisplay').textContent = 
+        shippingCost === 0 ? 'مجاني' : formatPrice(shippingCost);
+      document.getElementById('totalDisplay').textContent = formatPrice(total);
+      
+      const notice = document.getElementById('freeShippingNotice');
+      if (shippingCost === 0 && subtotal >= OriFitConfig.SHIPPING.freeThreshold) {
+        notice.style.display = 'flex';
+      } else {
+        notice.style.display = 'none';
+      }
+    }
+
+    async function submitOrder() {
+      const form = document.getElementById('orderForm');
+      
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const customerName = document.getElementById('customerName').value.trim();
+      const customerPhone = document.getElementById('customerPhone').value.trim();
+      const customerEmail = document.getElementById('customerEmail').value.trim();
+      const customerCity = document.getElementById('customerCity').value;
+      const customerAddress = document.getElementById('customerAddress').value.trim();
+      const customerPostalCode = document.getElementById('customerPostalCode').value.trim();
+      const orderNotes = document.getElementById('orderNotes').value.trim();
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+      // Validate phone
+      if (!validatePhone(customerPhone)) {
+        showToast('رقم الهاتف غير صحيح - استخدم صيغة مغربية صحيحة', 'error');
+        return;
+      }
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const shippingCost = calculateShipping(subtotal, customerCity);
+
+      const submitBtn = document.querySelector('.submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<div class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></div> جاري إرسال الطلب...';
+
+      try {
+        const response = await fetch(`${API_URL}/api/order`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            customer: {
+              name: customerName,
+              phone: customerPhone,
+              email: customerEmail || null,
+              city: customerCity,
+              address: customerAddress,
+              postal_code: customerPostalCode || null,
+              payment_method: paymentMethod === 'cod' ? 'عند الاستلام' : paymentMethod
+            },
+            items: cart,
+            shipping_cost: shippingCost,
+            notes: orderNotes || null
+          })
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.error || 'فشل إنشاء الطلب');
+        }
+
+        // Clear cart
+        localStorage.removeItem('orifit_cart');
+        
+        // Show success message
+        showSuccessMessage(data.data);
+
+      } catch (error) {
+        console.error('Order submission error:', error);
+        showToast(error.message || 'حدث خطأ، حاول مرة أخرى', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '✅ تأكيد الطلب';
+      }
+    }
+
+    function showSuccessMessage(orderData) {
+      document.getElementById('checkoutContainer').innerHTML = `
+        <div class="success-message">
+          <div class="success-icon">✅</div>
+          <h2>تم تقديم طلبك بنجاح!</h2>
+          <p style="color: var(--text-light); margin: 1rem 0;">
+            شكراً لك! سنتواصل معك قريباً لتأكيد الطلب
+          </p>
+          
+          <div class="order-id">
+            رقم الطلب: ${orderData.order_id}
+          </div>
+
+          <div style="background: #f5f5f5; padding: 1.5rem; border-radius: var(--radius); margin: 1.5rem 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span>المجموع الفرعي:</span>
+              <strong>${formatPrice(orderData.subtotal)}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span>الشحن:</span>
+              <strong>${orderData.shipping_cost === 0 ? 'مجاني' : formatPrice(orderData.shipping_cost)}</strong>
+            </div>
+            ${orderData.discount > 0 ? `
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--success);">
+                <span>الخصم:</span>
+                <strong>-${formatPrice(orderData.discount)}</strong>
+              </div>
+            ` : ''}
+            <div style="height: 1px; background: #ddd; margin: 0.5rem 0;"></div>
+            <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; color: var(--primary);">
+              <span>المجموع الكلي:</span>
+              <span>${formatPrice(orderData.total)}</span>
+            </div>
+          </div>
+
+          <div style="background: #e3f2fd; padding: 1rem; border-radius: var(--radius); margin: 1.5rem 0; text-align: right;">
+            <strong>📞 سنتصل بك خلال 24 ساعة</strong><br>
+            <span style="font-size: 0.9rem; color: var(--text-light);">
+              ${orderData.estimated_delivery || 'موعد التسليم المتوقع: 2-5 أيام عمل'}
+            </span>
+          </div>
+
+          <div class="action-buttons">
+            <a href="index.html" class="btn btn-primary">العودة للمتجر</a>
+            <button onclick="window.print()" class="btn btn-secondary">🖨️ طباعة</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCheckout();
+    });
+  </script>
+</body>
+</html>
