@@ -1,0 +1,122 @@
+# ============================================
+# OriFit Store - .gitignore
+# ============================================
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Wrangler
+.wrangler/
+.mf/
+wrangler.toml.local
+
+# Development
+.dev.vars
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+dist/
+build/
+.cache/
+out/
+.next/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE - VSCode
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# IDE - JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+
+# IDE - Other
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# TypeScript
+*.tsbuildinfo
+.tscache
+
+# Testing
+coverage/
+.nyc_output
+.jest-cache
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Package manager locks (keep one)
+# Uncomment if you want to ignore specific lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Cloudflare specific
+*.kv-namespace-id
+worker-*.js
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Secrets & API Keys
+*.pem
+*.key
+*.cert
+secrets.json
+config.local.json
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Local configuration
+local.config.js
