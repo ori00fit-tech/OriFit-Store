@@ -1,17 +1,56 @@
+# wrangler.toml
+# ============================================
+# Cloudflare Worker Configuration
+# ============================================
+
 name = "orifit-store"
-main = "src/index.ts"
-compatibility_date = "2026-01-07"
-compatibility_flags = ["nodejs_compat"]
+type = "javascript"
+account_id = "c96f59a4c839c1a81ece83aa4bb8269e"
+workers_dev = true
+route = "*"
+zone_id = ""
+
+# في حال كان عندك domain مخصص:
+# route = "https://orifit-store.ori00fit.workers.dev/*"
+
+# ============================================
+# D1 Database Binding
+# ============================================
 
 [[d1_databases]]
 binding = "DB"
 database_name = "orifit-db"
 database_id = "dcbacf89-5839-476a-8b76-aff356faf80c"
 
+# ============================================
+# R2 Bucket Binding (للصور)
+# ============================================
+
 [[r2_buckets]]
-binding = "R2_BUCKET"
+binding = "R2"
 bucket_name = "orifit-images"
 
-[vars]
-ADMIN_API_KEY = "8d32834f8626ead789b54181cd25c13a"
+# ============================================
+# بيئة التطوير (Development)
+# ============================================
 
+[env.development]
+name = "orifit-store-dev"
+vars = { ENVIRONMENT = "development" }
+d1_databases = [{ binding = "DB", database_name = "orifit-db-dev", database_id = "dcbacf89-5839-476a-8b76-aff356faf80c" }]
+
+# ============================================
+# بيئة الإنتاج (Production)
+# ============================================
+
+[env.production]
+name = "orifit-store-prod"
+vars = { ENVIRONMENT = "production" }
+d1_databases = [{ binding = "DB", database_name = "orifit-db", database_id = "dcbacf89-5839-476a-8b76-aff356faf80c" }]
+
+# ============================================
+# Compatibility Settings
+# ============================================
+
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
